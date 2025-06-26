@@ -2,10 +2,14 @@ import { NextResponse, NextRequest } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb';
 import Article from '@/models/Article';
 
-export async function GET(req: NextRequest, context: { params: { slug: string } }) {
+export async function GET(
+  req: NextRequest,
+  context: { params: Record<string, string | string[]> }
+) {
   await connectToDatabase();
   try {
-    const article = await Article.findOne({ slug: context.params.slug });
+    const slug = context.params.slug;
+    const article = await Article.findOne({ slug });
     if (!article) {
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
