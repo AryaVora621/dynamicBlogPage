@@ -66,7 +66,7 @@ export default function Home() {
         {/* Featured Story Banner */}
         <section className="w-full max-w-4xl mx-auto rounded-3xl shadow-lg overflow-hidden mb-12 mt-8" style={{ background: 'linear-gradient(90deg, #22335b 0%, #5fa0cf 100%)' }}>
           <div className="flex flex-col md:flex-row items-center gap-8 p-8">
-            <img src={featuredStory.image} alt="Featured" className="w-full md:w-1/3 h-56 object-cover rounded-2xl shadow-md" />
+            <Image src={featuredStory.image} alt="Featured" width={400} height={224} className="w-full md:w-1/3 h-56 object-cover rounded-2xl shadow-md" />
             <div className="flex-1 flex flex-col items-start justify-center">
               <h1 className="text-3xl md:text-4xl font-extrabold mb-2 leading-tight" style={{ color: '#fff' }}>{featuredStory.title}</h1>
               <p className="text-lg mb-4 text-white/90">{featuredStory.summary}</p>
@@ -87,7 +87,7 @@ export default function Home() {
             className="w-full max-w-md px-4 py-2 rounded-full bg-[#1a2942] text-white placeholder:text-[#5fa0cf] border border-[#22335b] focus:outline-none focus:ring-2 focus:ring-[#5fa0cf] shadow"
           />
           <div className="flex flex-wrap gap-2 justify-center">
-            {categories.map((cat, idx) => (
+            {categories.map((cat) => (
               <button
                 key={cat.name}
                 onClick={() => setSelectedCategory(cat.name)}
@@ -131,8 +131,8 @@ export default function Home() {
 
         {/* Category Sections */}
         <section className="w-full max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-          {categories.filter(cat => cat.name !== "All").map((cat, idx) => (
-            <div key={idx} className="rounded-2xl p-6 shadow-lg flex flex-col gap-2 bg-[#1a2942] border border-[#22335b]">
+          {categories.filter(cat => cat.name !== "All").map((cat) => (
+            <div key={cat.name} className="rounded-2xl p-6 shadow-lg flex flex-col gap-2 bg-[#1a2942] border border-[#22335b]">
               <span className="uppercase text-xs font-bold tracking-wider mb-1 text-[#5fa0cf]">{cat.name}</span>
               <p className="font-medium text-white/90">{cat.name === "Robotics Competitions" ? "FTC/FRC/VEX articles, event recaps, rule changes" : cat.name === "STEM Breakthroughs Made Simple" ? "New AI tools, space missions, biomedical innovations" : cat.name === "Youth in Tech Spotlight" ? "Features on student projects, competition winners, scholarships" : cat.name === "Educator Resources" ? "Shareable, class-ready articles + PDF versions" : "Simple intros to real jobs in tech"}</p>
             </div>
