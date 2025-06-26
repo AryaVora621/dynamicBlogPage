@@ -106,8 +106,8 @@ export default function Home() {
             {filteredArticles.length === 0 ? (
               <div className="text-white/70 text-center py-8 w-full">No articles found.</div>
             ) : (
-              filteredArticles.map((article, idx) => (
-                <Link href={`/${article.slug}`} key={idx}>
+              filteredArticles.map((article) => (
+                <Link href={`/${article.slug}`} key={article.slug}>
                   <div className="min-w-[220px] max-w-[220px] bg-[#1a2942] rounded-2xl shadow-lg p-4 flex flex-col items-center cursor-pointer hover:scale-105 transition border border-[#22335b] flex-shrink-0 snap-center">
                     <Image src={article.image} alt={article.title} width={220} height={112} className="w-full h-28 object-cover rounded mb-3" />
                     <h3 className="font-semibold text-md text-center text-white leading-tight">{article.title}</h3>
@@ -121,7 +121,7 @@ export default function Home() {
         {/* Daily Highlights Strip */}
         <section className="w-full max-w-4xl mx-auto mb-12">
           <div className="flex gap-3 overflow-x-auto hide-scrollbar justify-center w-full snap-x snap-mandatory pl-4 pr-4">
-            {dailyHighlights.map((highlight, _) => (
+            {dailyHighlights.map((highlight) => (
               <div key={highlight} className="px-4 py-2 rounded-full font-medium shadow-sm bg-[#5fa0cf] text-[#101c2c] whitespace-nowrap text-sm flex-shrink-0 snap-center">
                 {highlight}
               </div>
