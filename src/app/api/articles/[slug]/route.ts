@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import articles from '@/data/articles';
+import articles, { Article } from '@/data/articles';
 
 export async function GET(
   req: NextRequest,
@@ -7,7 +7,7 @@ export async function GET(
 ) {
   try {
     const { slug } = await params;
-    const article = articles.find((a: any) => a.slug === slug);
+    const article = articles.find((a: Article) => a.slug === slug);
     if (!article) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }

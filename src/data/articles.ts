@@ -1,4 +1,13 @@
-const articles = [
+export type Article = {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  category: string;
+  date: string;
+};
+
+const articles: Article[] = [
   {
     id: '1',
     title: 'The James Webb Space Telescope: A New Era in Astronomy',
