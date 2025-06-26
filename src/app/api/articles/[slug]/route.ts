@@ -4,11 +4,12 @@ import Article from "@/models/Article";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   await connectToDatabase();
   try {
-    const article = await Article.findOne({ slug: params.slug });
+    const { slug } = await params;
+    const article = await Article.findOne({ slug });
     if (!article) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
