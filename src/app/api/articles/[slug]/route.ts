@@ -10,7 +10,7 @@ export async function GET(req: Request, { params }: { params: { slug: string } }
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
     return NextResponse.json(article);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 } 

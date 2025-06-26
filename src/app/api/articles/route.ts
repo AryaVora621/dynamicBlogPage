@@ -10,7 +10,7 @@ export async function GET(req: Request) {
     const query = category ? { category } : {};
     const articles = await Article.find(query).sort({ date: -1 });
     return NextResponse.json(articles);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 } 

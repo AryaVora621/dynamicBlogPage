@@ -7,7 +7,7 @@ export async function GET() {
   try {
     const categories = await Category.find({});
     return NextResponse.json(categories);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 } 

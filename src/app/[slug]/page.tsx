@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useParams } from "next/navigation";
+import Image from "next/image";
 
 // Placeholder data
 const article = {
@@ -29,15 +29,11 @@ const related = [
 ];
 
 export default function ArticlePage() {
-  // Use slug param for the article title (for now)
-  // In real app, fetch article by slug
-  // const { slug } = useParams();
-
   return (
     <div className="min-h-screen font-sans" style={{ backgroundColor: '#101c2c', color: '#fff' }}>
       {/* Hero Image */}
       <div className="w-full h-64 md:h-96 relative mb-8 bg-[#1a2942] flex items-center justify-center shadow-lg">
-        <img src={article.heroImage} alt="Hero" className="w-full h-full object-cover object-center rounded-b-3xl max-w-3xl mx-auto" />
+        <Image src={article.heroImage} alt="Hero" width={1200} height={400} className="w-full h-full object-cover object-center rounded-b-3xl max-w-3xl mx-auto" />
       </div>
       <div className="max-w-3xl mx-auto px-4 md:px-0">
         {/* Title & Meta */}
@@ -76,7 +72,7 @@ export default function ArticlePage() {
           <div className="flex gap-6 overflow-x-auto hide-scrollbar justify-center w-full px-4 snap-x snap-mandatory">
             {related.map((rel, idx) => (
               <div key={idx} className="min-w-[220px] max-w-[220px] bg-[#1a2942] rounded-2xl shadow-lg p-4 flex flex-col items-center flex-shrink-0 snap-center border border-[#22335b]">
-                <img src={rel.image} alt={rel.title} className="w-full h-24 object-cover rounded mb-2" />
+                <Image src={rel.image} alt={rel.title} width={220} height={96} className="w-full h-24 object-cover rounded mb-2" />
                 <h4 className="font-semibold text-md text-center text-white leading-tight">{rel.title}</h4>
               </div>
             ))}
