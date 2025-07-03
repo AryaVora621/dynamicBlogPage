@@ -11,7 +11,7 @@ export async function GET(req: Request) {
       orderBy: { date: 'desc' },
     });
     return NextResponse.json(articles);
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
@@ -49,7 +49,7 @@ export async function POST(req: Request) {
       },
     });
     return NextResponse.json(newArticle, { status: 201 });
-  } catch (err) {
+  } catch (err: unknown) {
     console.error('POST /api/articles error:', err);
     return NextResponse.json({ error: 'Server error', details: String(err) }, { status: 500 });
   }
@@ -75,7 +75,7 @@ export async function DELETE(req: Request) {
   try {
     await prisma.article.delete({ where: { slug } });
     return NextResponse.json({ success: true });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Not found or server error' }, { status: 404 });
   }
 } 

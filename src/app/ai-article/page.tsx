@@ -3,8 +3,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const UNSPLASH_DEMO_URL = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80";
-
 export default function AIArticlePage() {
   const [mode, setMode] = useState<"ai" | "upload">("ai");
   // AI Article states
@@ -49,8 +47,8 @@ export default function AIArticlePage() {
       setAITitle(data.title || prompt.slice(0, 60));
       setAIImage(data.image_url || "");
       setAICategory(data.category || "");
-    } catch (err: any) {
-      setAIError(err.message || "Failed to generate article. Try again.");
+    } catch (err: unknown) {
+      setAIError((err as Error).message || "Failed to generate article. Try again.");
     } finally {
       setAILoading(false);
     }

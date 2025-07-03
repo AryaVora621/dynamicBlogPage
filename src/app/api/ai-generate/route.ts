@@ -131,9 +131,9 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ title, content, category, image_url: imageUrl });
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json({
-      error: err.message || "Failed to generate article.",
+      error: (err as Error).message || "Failed to generate article.",
       raw: err
     }, { status: 500 });
   }

@@ -2,46 +2,18 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { PrismaClient } from '@prisma/client';
 import { useRouter } from "next/navigation";
 import { use } from "react";
-
-const prisma = new PrismaClient();
-
-// Placeholder data
-const article = {
-  heroImage: "/placeholder-article.jpg",
-  title: "How This FTC Team Used AI to Win Regionals",
-  author: "Ava Robotics",
-  date: "May 2, 2024",
-  category: "Robotics Competitions",
-  content: [
-    { type: "heading", text: "The Power of AI in Robotics" },
-    { type: "paragraph", text: "This season, Team 12345 from California shocked the FTC world by integrating a custom AI vision system into their robot. But how did they do it—and what can your team learn?" },
-    { type: "pullquote", text: "'We wanted to make scouting smarter, not harder.'" },
-    { type: "heading", text: "Building the Vision System" },
-    { type: "paragraph", text: "Using open-source tools and a lot of trial and error, the team trained their AI to recognize game elements in real time. The result? Faster cycles, fewer mistakes, and a trip to the finals." },
-    { type: "didyouknow", text: "Did you know? FTC teams can use TensorFlow for on-robot AI!" },
-    { type: "heading", text: "What's Next for Student Robotics?" },
-    { type: "paragraph", text: "With AI becoming more accessible, expect to see even more creative uses in next year's competitions. Will your team be next?" },
-  ],
-};
-
-const related = [
-  { title: "Top 5 VEX Bots at Worlds That Blew Our Minds", image: "/placeholder_main.png" },
-  { title: "NASA's New Mars Rover Has a Trick You Won't Believe", image: "/placeholder_main.png" },
-  { title: "What It's Like to Work at SpaceX (From a 23-Year-Old Engineer)", image: "/placeholder_main.png" },
-];
 
 export default function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const router = useRouter();
-  const [article, setArticle] = useState<any>(null);
+  const [article, setArticle] = useState<Record<string, unknown> | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [deleting, setDeleting] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [relatedArticles, setRelatedArticles] = useState<any[]>([]);
+  const [relatedArticles, setRelatedArticles] = useState<Record<string, unknown>[]>([]);
 
   useEffect(() => {
     setIsAdmin(typeof window !== "undefined" && localStorage.getItem("makeminds_token") === "loggedin");
@@ -180,10 +152,10 @@ export default function ArticlePage({ params }: { params: Promise<{ slug: string
         <div className="mb-20">
           <h3 className="text-xl font-bold mb-6 text-[#5fa0cf] text-center">Explore more like this</h3>
           <div className="flex gap-6 overflow-x-auto hide-scrollbar justify-center w-full px-4 snap-x snap-mandatory">
-            {relatedArticles.map((rel, idx) => (
-              <div key={rel.slug} className="min-w-[220px] max-w-[220px] bg-[#1a2942] rounded-2xl shadow-lg p-4 flex flex-col items-center flex-shrink-0 snap-center border border-[#22335b]">
-                <Image src={rel.image_url || "/placeholder_main.png"} alt={rel.title} width={220} height={96} className="w-full h-24 object-cover rounded mb-2" />
-                <h4 className="font-semibold text-md text-center text-white leading-tight">{rel.title}</h4>
+            {relatedArticles.map((rel) => (
+              <div key={String(rel.slug)} className="min-w-[220px] max-w-[220px] bg-[#1a2942] rounded-2xl shadow-lg p-4 flex flex-col items-center flex-shrink-0 snap-center border border-[#22335b]">
+                <Image src={typeof rel.image_url === 'string' ? rel.image_url : "/placeholder_main.png"} alt={typeof rel.title === 'string' ? rel.title : ''} width={220} height={96} className="w-full h-24 object-cover rounded mb-2" />
+                <h4 className="font-semibold text-md text-center text-white leading-tight">{typeof rel.title === 'string' ? rel.title : ''}</h4>
               </div>
             ))}
           </div>

@@ -31,7 +31,7 @@ const categories = [
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [search, setSearch] = useState("");
-  const [articles, setArticles] = useState<any[]>([]);
+  const [articles, setArticles] = useState<Record<string, unknown>[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -53,8 +53,8 @@ export default function Home() {
   const filteredArticles = Array.isArray(articles)
     ? articles.filter(
         (a) =>
-          (selectedCategory === "All" || a.category === selectedCategory) &&
-          a.title.toLowerCase().includes(search.toLowerCase())
+          (selectedCategory === "All" || (typeof a.category === 'string' && a.category === selectedCategory)) &&
+          typeof a.title === 'string' && a.title.toLowerCase().includes(search.toLowerCase())
       )
     : [];
 
@@ -107,10 +107,10 @@ export default function Home() {
               <div className="text-white/70 text-center py-8 w-full">No articles found.</div>
             ) : (
               filteredArticles.map((article) => (
-                <Link href={`/${article.slug}`} key={article.slug}>
+                <Link href={`/${String(article.slug)}`} key={String(article.slug)}>
                   <div className="min-w-[220px] max-w-[220px] bg-[#1a2942] rounded-2xl shadow-lg p-4 flex flex-col items-center cursor-pointer hover:scale-105 transition border border-[#22335b] flex-shrink-0 snap-center">
-                    <Image src={article.image_url || "/placeholder_main.png"} alt={article.title} width={220} height={112} className="w-full h-28 object-cover rounded mb-3" />
-                    <h3 className="font-semibold text-md text-center text-white leading-tight">{article.title}</h3>
+                    <Image src={typeof article.image_url === 'string' ? article.image_url : "/placeholder_main.png"} alt={typeof article.title === 'string' ? article.title : ''} width={220} height={112} className="w-full h-28 object-cover rounded mb-3" />
+                    <h3 className="font-semibold text-md text-center text-white leading-tight">{typeof article.title === 'string' ? article.title : ''}</h3>
                   </div>
                 </Link>
               ))

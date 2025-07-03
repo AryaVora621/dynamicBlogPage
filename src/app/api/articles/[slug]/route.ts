@@ -9,7 +9,7 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
     return NextResponse.json(article);
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
@@ -50,7 +50,7 @@ export async function PUT(req: NextRequest, { params }: { params: { slug: string
       },
     });
     return NextResponse.json(updated);
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
@@ -70,7 +70,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { slug: str
   try {
     await prisma.article.delete({ where: { slug } });
     return NextResponse.json({ success: true });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 } 
