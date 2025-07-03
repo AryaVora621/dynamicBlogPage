@@ -122,8 +122,13 @@ export async function POST(req: NextRequest) {
         );
         const pexelsData = await pexelsRes.json();
         // Find the first valid image
-        const validPhoto = (pexelsData.photos || []).find((photo: any) => photo?.src?.large);
-        imageUrl = validPhoto?.src?.large || "";
+        const validPhoto = (pexelsData.photos || []).find((photo: unknown) => {
+          if (photo && typeof photo === 'object' && 'src' in photo && photo.src && typeof photo.src === 'object' && 'large' in photo.src) {
+            return (photo.src as { large?: string }).large;
+          }
+          return false;
+        });
+        imageUrl = validPhoto && typeof validPhoto === 'object' && 'src' in validPhoto && validPhoto.src && typeof validPhoto.src === 'object' && 'large' in validPhoto.src ? (validPhoto.src as { large?: string }).large || "" : "";
       }
     } catch {}
     if (!imageUrl) {
